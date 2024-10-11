@@ -2,10 +2,6 @@ let playerCredits = 1000;
 let housePool = 0;
 let prizePool = 1000;
 
-const multipliers = [0.1, 0.3, 1, 3, 5, 10, 41, 110];
-const weights = [400, 300, 150, 100, 30, 15, 4, 1];  // Updated weights for probabilities
-
-
 function updateDisplay() {
     document.getElementById('playerCredits').innerText = playerCredits;
     document.getElementById('housePool').innerText = housePool;
@@ -13,22 +9,28 @@ function updateDisplay() {
 }
 
 function createPegs() {
-    const pegContainer = document.querySelector('.pegs');
-    const pegPositions = [
-        [4], 
-        [3, 5], 
-        [2, 4, 6], 
-        [1, 3, 5, 7], 
-        [0, 2, 4, 6, 8]  // Triangle formation
-    ];
-
-    pegPositions.forEach((row, rowIndex) => {
-        row.forEach((pos) => {
+    const pegContainer = document.getElementById('pegs');
+    const rows = 6;
+    for (let i = 0; i < rows; i++) {
+        const rowDiv = document.createElement('div');
+        for (let j = 0; j <= i; j++) {
             const peg = document.createElement('div');
             peg.classList.add('peg');
-            peg.style.gridColumn = pos + 1;
-            pegContainer.appendChild(peg);
-        });
+            rowDiv.appendChild(peg);
+        }
+        pegContainer.appendChild(rowDiv);
+    }
+}
+
+function createSlots() {
+    const slotContainer = document.getElementById('slots');
+    const multipliers = ['0.1x', '0.3x', '1x', '3x', '5x', '10x', '41x', '110x'];
+    multipliers.forEach(multiplier => {
+        const slot = document.createElement('div');
+        slot.classList.add('slot');
+        slot.innerText = multiplier;
+        slot.setAttribute('data-multiplier', multiplier);
+        slotContainer.appendChild(slot);
     });
 }
 
@@ -46,7 +48,7 @@ function dropBalls(numberOfBalls) {
     prizePool += totalBet * 0.95;
 
     for (let i = 0; i < numberOfBalls; i++) {
-        dropBall(i * 500); // Stagger ball drops for visual effect
+        dropBall(i * 500);
     }
 }
 
@@ -55,8 +57,7 @@ function dropBall(delay) {
     ball.classList.add('ball');
     document.getElementById('game-board').appendChild(ball);
 
-    // Randomize ball starting position
-    const startX = Math.random() * 200 + 100; // Adjust for start position randomness
+    const startX = Math.random() * 200 + 100;
     ball.style.left = `${startX}px`;
     ball.style.top = '0px';
 
@@ -71,12 +72,12 @@ function simulateBallDrop(ball, startX) {
 
     const dropInterval = setInterval(() => {
         currentY += 20;
-        currentX += (Math.random() - 0.5) * 30; // Random movement left and right
+        currentX += (Math.random() - 0.5) * 30;
 
         ball.style.top = `${currentY}px`;
         ball.style.left = `${currentX}px`;
 
-        if (currentY >= 400) { // Ball reaches bottom
+        if (currentY >= 400) {
             clearInterval(dropInterval);
             ballLands(ball);
         }
@@ -88,19 +89,16 @@ function ballLands(ball) {
     const randomSlot = Math.floor(Math.random() * slots.length);
     const selectedSlot = slots[randomSlot];
 
-    // Highlight the slot and remove ball
     selectedSlot.classList.add('highlight');
     setTimeout(() => {
         selectedSlot.classList.remove('highlight');
         ball.remove();
     }, 1000);
 
-    // Simulate win
-    const multiplier = parseFloat(selectedSlot.getAttribute('data-multiplier'));
+    const multiplier = parseFloat(selectedSlot.getAttribute('data-multiplier').replace('x', ''));
     const betAmount = parseInt(document.getElementById('betAmount').value);
     const winnings = betAmount * multiplier;
 
-    // Cap winnings by prize pool
     const payout = Math.min(winnings, prizePool);
     playerCredits += payout;
     prizePool -= payout;
@@ -110,3 +108,4 @@ function ballLands(ball) {
 
 updateDisplay();
 createPegs();
+createSlots();
