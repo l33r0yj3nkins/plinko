@@ -10,11 +10,22 @@ function updateDisplay() {
 
 function createPegs() {
     const pegContainer = document.querySelector('.pegs');
-    for (let i = 0; i < 40; i++) {
-        const peg = document.createElement('div');
-        peg.classList.add('peg');
-        pegContainer.appendChild(peg);
-    }
+    const pegPositions = [
+        [4], 
+        [3, 5], 
+        [2, 4, 6], 
+        [1, 3, 5, 7], 
+        [0, 2, 4, 6, 8]  // Triangle formation
+    ];
+
+    pegPositions.forEach((row, rowIndex) => {
+        row.forEach((pos) => {
+            const peg = document.createElement('div');
+            peg.classList.add('peg');
+            peg.style.gridColumn = pos + 1;
+            pegContainer.appendChild(peg);
+        });
+    });
 }
 
 function dropBalls(numberOfBalls) {
