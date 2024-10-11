@@ -1,16 +1,18 @@
 {
-  "name": "plinko",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}
-"scripts": {
-  "start": "node server.js"
-}
+    "name": "plinko-game",
+    "version": "1.0.0",
+    "description": "A Plinko game built for Heroku deployment",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1"
+    },
+    "engines": {
+      "node": ">=14.0.0"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+  
