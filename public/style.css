@@ -1,20 +1,74 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0;
+    padding: 20px;
 }
 
-#game {
-    width: 400px;
-    height: 600px;
-    background-color: lightgray;
+.container {
+    max-width: 800px;
     margin: 0 auto;
+}
+
+.game-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap: 10px;
+    margin: 20px 0;
+}
+
+.pegs {
+    grid-column: span 9;
+    height: 400px;
+    background-color: transparent;
+    border: 1px solid white;
     position: relative;
 }
 
-.ball {
-    width: 15px;
-    height: 15px;
+.slot {
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.slot[data-multiplier="110x"] {
+    background-color: red;
+}
+
+.slot[data-multiplier="41x"] {
+    background-color: orange;
+}
+
+.slot[data-multiplier="10x"],
+.slot[data-multiplier="5x"],
+.slot[data-multiplier="3x"] {
     background-color: yellow;
-    border-radius: 50%;
-    position: absolute;
+}
+
+.slot[data-multiplier="1x"] {
+    background-color: green;
+}
+
+.slot[data-multiplier="0.5x"],
+.slot[data-multiplier="0.3x"],
+.slot[data-multiplier="0.1x"] {
+    background-color: lightblue;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.stats {
+    margin-top: 20px;
 }

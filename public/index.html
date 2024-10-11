@@ -7,8 +7,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Plinko Game</h1>
-    <div id="game"></div>
+    <div class="container">
+        <h1>Plinko Game</h1>
+        <div class="game-board" id="game-board">
+            <div class="pegs"></div>
+            <div class="slots">
+                <div class="slot" data-multiplier="110x">110x</div>
+                <div class="slot" data-multiplier="41x">41x</div>
+                <div class="slot" data-multiplier="10x">10x</div>
+                <div class="slot" data-multiplier="5x">5x</div>
+                <div class="slot" data-multiplier="3x">3x</div>
+                <div class="slot" data-multiplier="1x">1x</div>
+                <div class="slot" data-multiplier="0.5x">0.5x</div>
+                <div class="slot" data-multiplier="0.3x">0.3x</div>
+                <div class="slot" data-multiplier="0.1x">0.1x</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <label for="betAmount">Bet Amount Per Ball: </label>
+            <input type="number" id="betAmount" value="10" />
+            <button onclick="dropBalls(5)">Drop 5 Balls</button>
+        </div>
+
+        <div class="stats">
+            <h2>Player Credits: <span id="playerCredits">1000</span></h2>
+            <h2>House Pool: <span id="housePool">0</span></h2>
+            <h2>Prize Pool: <span id="prizePool">1000</span></h2>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
