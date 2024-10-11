@@ -9,15 +9,10 @@
 <body>
     <div class="container">
         <h1>Plinko Game</h1>
+        <button class="drop-button" onclick="dropBall()">Drop</button>
         <div class="game-board" id="game-board">
             <div class="pegs" id="pegs"></div>
             <div class="slots" id="slots"></div>
-        </div>
-
-        <div class="controls">
-            <label for="betAmount">Bet Amount Per Ball: </label>
-            <input type="number" id="betAmount" value="10" />
-            <button onclick="dropBalls(5)">Drop 5 Balls</button>
         </div>
 
         <div class="stats">

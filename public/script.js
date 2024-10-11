@@ -10,21 +10,27 @@ function updateDisplay() {
 
 function createPegs() {
     const pegContainer = document.getElementById('pegs');
-    const rows = 6;
-    for (let i = 0; i < rows; i++) {
-        const rowDiv = document.createElement('div');
-        for (let j = 0; j <= i; j++) {
+    const pegRows = [
+        [4],
+        [3, 5],
+        [2, 4, 6],
+        [1, 3, 5, 7],
+        [0, 2, 4, 6, 8]
+    ];
+
+    pegRows.forEach((row, rowIndex) => {
+        row.forEach((colIndex) => {
             const peg = document.createElement('div');
             peg.classList.add('peg');
-            rowDiv.appendChild(peg);
-        }
-        pegContainer.appendChild(rowDiv);
-    }
+            peg.style.gridColumn = colIndex + 1;
+            pegContainer.appendChild(peg);
+        });
+    });
 }
 
 function createSlots() {
     const slotContainer = document.getElementById('slots');
-    const multipliers = ['0.1x', '0.3x', '1x', '3x', '5x', '10x', '41x', '110x'];
+    const multipliers = [50, 20, 7, 4, 1, 0, 0, 1, 4, 7, 20, 50];
     multipliers.forEach(multiplier => {
         const slot = document.createElement('div');
         slot.classList.add('slot');
@@ -34,36 +40,16 @@ function createSlots() {
     });
 }
 
-function dropBalls(numberOfBalls) {
-    let betAmount = parseInt(document.getElementById('betAmount').value);
-    let totalBet = betAmount * numberOfBalls;
-
-    if (playerCredits < totalBet) {
-        alert("Not enough credits to bet!");
-        return;
-    }
-
-    playerCredits -= totalBet;
-    housePool += totalBet * 0.05;
-    prizePool += totalBet * 0.95;
-
-    for (let i = 0; i < numberOfBalls; i++) {
-        dropBall(i * 500);
-    }
-}
-
-function dropBall(delay) {
+function dropBall() {
     const ball = document.createElement('div');
     ball.classList.add('ball');
     document.getElementById('game-board').appendChild(ball);
 
-    const startX = Math.random() * 200 + 100;
+    const startX = 250;  // Always start from the center top
     ball.style.left = `${startX}px`;
     ball.style.top = '0px';
 
-    setTimeout(() => {
-        simulateBallDrop(ball, startX);
-    }, delay);
+    simulateBallDrop(ball, startX);
 }
 
 function simulateBallDrop(ball, startX) {
@@ -72,12 +58,12 @@ function simulateBallDrop(ball, startX) {
 
     const dropInterval = setInterval(() => {
         currentY += 20;
-        currentX += (Math.random() - 0.5) * 30;
+        currentX += (Math.random() - 0.5) * 30;  // Random left-right movement
 
         ball.style.top = `${currentY}px`;
         ball.style.left = `${currentX}px`;
 
-        if (currentY >= 400) {
+        if (currentY >= 550) {  // When the ball reaches the bottom
             clearInterval(dropInterval);
             ballLands(ball);
         }
@@ -95,9 +81,8 @@ function ballLands(ball) {
         ball.remove();
     }, 1000);
 
-    const multiplier = parseFloat(selectedSlot.getAttribute('data-multiplier').replace('x', ''));
-    const betAmount = parseInt(document.getElementById('betAmount').value);
-    const winnings = betAmount * multiplier;
+    const multiplier = parseFloat(selectedSlot.getAttribute('data-multiplier'));
+    const winnings = 10 * multiplier;  // Assuming a flat bet of 10 credits per ball
 
     const payout = Math.min(winnings, prizePool);
     playerCredits += payout;
