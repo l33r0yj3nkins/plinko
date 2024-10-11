@@ -2,6 +2,10 @@ let playerCredits = 1000;
 let housePool = 0;
 let prizePool = 1000;
 
+const multipliers = [0.1, 0.3, 1, 3, 5, 10, 41, 110];
+const weights = [400, 300, 150, 100, 30, 15, 4, 1];  // Updated weights for probabilities
+
+
 function updateDisplay() {
     document.getElementById('playerCredits').innerText = playerCredits;
     document.getElementById('housePool').innerText = housePool;
