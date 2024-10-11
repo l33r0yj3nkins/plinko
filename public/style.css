@@ -21,11 +21,32 @@ body {
 }
 
 .pegs {
-    grid-column: span 9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 400px;
-    background-color: transparent;
-    border: 1px solid white;
-    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    pointer-events: none; /* Disable interaction with pegs */
+}
+
+.peg {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    margin: 15px;
+}
+
+.ball {
+    width: 15px;
+    height: 15px;
+    background-color: yellow;
+    border-radius: 50%;
+    position: absolute;
+    transition: top 0.5s ease-in, left 0.5s ease-in; /* Smooth transition for ball */
 }
 
 .slot {
@@ -41,28 +62,8 @@ body {
     transition: background-color 0.3s;
 }
 
-.slot[data-multiplier="110x"] {
-    background-color: red;
-}
-
-.slot[data-multiplier="41x"] {
-    background-color: orange;
-}
-
-.slot[data-multiplier="10x"],
-.slot[data-multiplier="5x"],
-.slot[data-multiplier="3x"] {
-    background-color: yellow;
-}
-
-.slot[data-multiplier="1x"] {
-    background-color: green;
-}
-
-.slot[data-multiplier="0.5x"],
-.slot[data-multiplier="0.3x"],
-.slot[data-multiplier="0.1x"] {
-    background-color: lightblue;
+.slot.highlight {
+    background-color: #00ff00; /* Highlight slot when ball lands */
 }
 
 .controls {
